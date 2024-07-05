@@ -1,0 +1,8 @@
+<ng-container *ngIf="showMenus">
+  <app-navbar></app-navbar>
+  <app-shopping-cart></app-shopping-cart>
+</ng-container>
+<router-outlet *ngIf="!showMenus"></router-outlet>
+<div class="container-content" *ngIf="showMenus">
+  <router-outlet></router-outlet>
+</div>

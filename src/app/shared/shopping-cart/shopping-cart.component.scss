@@ -1,0 +1,138 @@
+.shopping-cart-container {
+  z-index: 100;
+  background-color: var(--dark-color);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 3rem;
+  min-width: 38px;
+  width: 4vw;
+  width: 4dvw;
+
+  position: fixed;
+  right: 3vw;
+  right: 3dvw;
+  top: 0.5rem;
+
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+
+  .icon-section {
+    position: relative;
+    margin: 10px;
+
+    mat-icon {
+      color: rgba(255, 255, 255, 0.438);
+      position: relative;
+    }
+    &:hover {
+      .mat-icon {
+        color: white;
+        cursor: pointer;
+      }
+    }
+  }
+
+  p {
+    font-size: 10px;
+    color: white;
+    margin: 0;
+  }
+}
+
+.dropdown {
+  position: fixed;
+  z-index: 100;
+  right: 10px;
+  top: 4rem;
+  width: 20rem;
+  height: 0;
+  background-color: var(--dark-color);
+  border-radius: 10px;
+  z-index: 100;
+  transition: height 0.5s ease;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+
+  .dropdown-header {
+    text-align: center;
+
+    align-self: flex-start;
+    .totals {
+      font-size: 15px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+  }
+
+  .dropdown-body {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 400px;
+    font-size: 15px;
+
+    .product {
+      padding-block: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      border-bottom: 1px solid white;
+      border-top: 1px solid white;
+      .text-secondary {
+        flex: 1;
+        justify-self: start;
+        &:hover {
+          color: rgb(255, 255, 255) !important;
+          cursor: pointer;
+        }
+      }
+      .text-primary {
+        flex: 1;
+        justify-self: center;
+      }
+
+      .btn {
+        flex: 0 1 auto;
+        mat-icon {
+          font-size: 20px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+  .dropdown-footer {
+    align-self: flex-end;
+  }
+  &::after {
+    content: "";
+    right: 4vw;
+    position: absolute;
+    top: -12px;
+    border-width: 7px;
+    opacity: 0;
+    border-style: solid;
+    border-color: transparent transparent var(--dark-color) transparent;
+    transition: opacity 0.5s ease;
+  }
+
+  &.visible {
+    height: 500px;
+    padding: 10px;
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .shopping-cart-container {
+    left: 83vw;
+    left: 83dvw;
+  }
+}

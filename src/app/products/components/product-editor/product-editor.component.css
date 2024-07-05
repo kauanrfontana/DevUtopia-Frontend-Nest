@@ -1,0 +1,33 @@
+.preview-image-container {
+  width: 356px;
+  max-width: 100%;
+  height: 252px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: calc(100% - 10px);
+    height: 242px;
+    border-radius: 10px;
+  }
+}
+
+input,
+textarea {
+  margin-bottom: 1rem;
+}
+
+h3,
+h4 {
+  color: var(--secondary-color);
+  text-wrap: nowrap;
+  margin-bottom: 1rem;
+}
+
+small {
+  font-size: 12px;
+  text-align: center;
+}

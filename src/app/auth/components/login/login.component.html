@@ -1,0 +1,160 @@
+<div class="screen">
+  <div class="container">
+    <button
+      class="btn btn-link btn-go-back animate fadeIn animate--ease-in"
+      [hidden]="
+        registerClass !== registerClasses.selected &&
+        loginClass !== loginClasses.selected
+      "
+      (click)="restart()"
+    >
+      ↩
+    </button>
+    <div class="container-welcome" *ngIf="!inRegister && !inLogin">
+      <img
+        draggable="false"
+        width="250px"
+        [class]="logoClass + ' logo'"
+        src="../../assets/imgs/logoLojaAmplied.png"
+        alt="Logo da loja"
+      />
+      <p [ngStyle]="{ opacity: logoClass !== '' ? 0 : 1 }">
+        O Paraíso do Desenvovedor!
+      </p>
+    </div>
+    <div
+      [class]="registerClass + ' container-register'"
+      (mouseleave)="onPreviewRegister()"
+      (mouseenter)="onPreviewRegister()"
+    >
+      <button
+        class="btn btn-outline-light btn-register"
+        (click)="onRegister()"
+        *ngIf="registerClass !== registerClasses.selected"
+      >
+        Registre-se
+      </button>
+
+      <ng-container *ngIf="registerClass === registerClasses.selected">
+        <form
+          class="register-form"
+          [formGroup]="registerForm"
+          (ngSubmit)="onRegisterUser()"
+        >
+          <section class="fields animate fadeIn animate--ease-in">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                placeholder=""
+              />
+              <label requiredInput>Nome</label>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="email"
+                placeholder=""
+              />
+              <label requiredInput>Email</label>
+            </div>
+            <div class="form-group">
+              <input
+                [type]="!passwordsVisible ? 'password' : 'text'"
+                class="form-control"
+                formControlName="password"
+                placeholder=""
+              />
+              <label requiredInput>Senha</label>
+              <a
+                class="view-password"
+                (click)="passwordsVisible = !passwordsVisible"
+                ><mat-icon>{{
+                  !passwordsVisible ? "visibility" : "visibility_off"
+                }}</mat-icon></a
+              >
+            </div>
+            <div class="form-group">
+              <input
+                [type]="!passwordsVisible ? 'password' : 'text'"
+                class="form-control"
+                formControlName="passwordConfirm"
+                placeholder=""
+              />
+              <label requiredInput>Confirmação de senha</label>
+              <a
+                class="view-password"
+                (click)="passwordsVisible = !passwordsVisible"
+                ><mat-icon>{{
+                  !passwordsVisible ? "visibility" : "visibility_off"
+                }}</mat-icon></a
+              >
+            </div>
+          </section>
+
+          <section class="actions animate fadeIn animate--ease-in">
+            <button class="btn btn-outline-light" type="submit">
+              Cadastrar
+            </button>
+          </section>
+        </form>
+      </ng-container>
+    </div>
+    <div
+      [class]="loginClass + ' container-login'"
+      (mouseleave)="onPreviewLogin()"
+      (mouseenter)="onPreviewLogin()"
+    >
+      <button
+        class="btn btn-outline-light btn-login"
+        (click)="onLogin()"
+        *ngIf="loginClass !== loginClasses.selected"
+      >
+        Login
+      </button>
+      <ng-container *ngIf="loginClass === loginClasses.selected">
+        <form
+          class="login-form"
+          [formGroup]="loginForm"
+          (ngSubmit)="onLoginUser()"
+        >
+          <section class="fields animate fadeIn animate--ease-in">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="email"
+                placeholder=""
+              />
+              <label requiredInput>E-mail</label>
+            </div>
+            <div class="form-group">
+              <input
+                [type]="!passwordsVisible ? 'password' : 'text'"
+                class="form-control"
+                formControlName="password"
+                placeholder=""
+              />
+              <label requiredInput>Senha</label>
+              <a
+                class="view-password"
+                (click)="passwordsVisible = !passwordsVisible"
+                ><mat-icon>{{
+                  !passwordsVisible ? "visibility" : "visibility_off"
+                }}</mat-icon></a
+              >
+            </div>
+          </section>
+          <section class="actions animate fadeIn animate--ease-in">
+            <button class="btn btn-outline-light" type="submit">Login</button>
+          </section>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+  <div class="loader-container" *ngIf="pageLoading">
+    <app-loader-dots></app-loader-dots>
+  </div>
+</div>

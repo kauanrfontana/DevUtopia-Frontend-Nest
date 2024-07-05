@@ -1,0 +1,13 @@
+
+.mine-products-list {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 15px;
+}
+.products-item{
+  flex: 0 1 auto;
+  a{
+    text-decoration: none;
+  }
+  
+}

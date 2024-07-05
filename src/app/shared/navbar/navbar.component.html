@@ -1,0 +1,56 @@
+<div
+  class="navbar-container"
+  [ngClass]="{ 'first-view': firstView }"
+  #navContainer
+>
+  <ul class="nav-list" [hidden]="!showingNavbar">
+    <li
+      class="nav-item btn-opened animate fadeIn animate--ease-in"
+      (click)="navbarOpened()"
+    >
+      <a>
+        <app-label-clue>
+          <ng-container content>
+            <mat-icon>{{ iconOpened }}</mat-icon>
+          </ng-container>
+          <ng-container label>{{
+            iconOpened == "keyboard_arrow_down"
+              ? "Manter aberto"
+              : "Tornar dinâmico"
+          }}</ng-container>
+        </app-label-clue>
+        <!-- <mat-icon>{{ iconOpened }}</mat-icon>
+        <div class="label-clue">
+          <label>{{
+            iconOpened == "keyboard_arrow_down"
+              ? "Manter aberto"
+              : "Tornar dinâmico"
+          }}</label>
+        </div> -->
+      </a>
+    </li>
+    <ng-container *ngFor="let item of navItems">
+      <li
+        class="nav-item animate fadeIn animate--ease-in"
+        routerLinkActive="active"
+      >
+        <a [routerLink]="[item.route]">
+          <app-label-clue>
+            <ng-container content>
+              <mat-icon>{{ item.icon }}</mat-icon>
+            </ng-container>
+            <ng-container label>{{ item.label }}</ng-container>
+          </app-label-clue>
+        </a>
+      </li>
+    </ng-container>
+    <li class="nav-item btn-logout animate fadeIn animate--ease-in">
+      <a (click)="onLogout()">
+        <app-label-clue>
+          <ng-container content><mat-icon>exit_to_app</mat-icon></ng-container>
+          <ng-container label>Logout</ng-container>
+        </app-label-clue>
+      </a>
+    </li>
+  </ul>
+</div>

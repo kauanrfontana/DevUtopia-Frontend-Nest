@@ -1,0 +1,131 @@
+<div class="container p-5">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h3>Dados do Produto</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5 col-sm-12 d-flex flex-column align-items-center mb-5">
+      <div class="preview-image-container">
+        <img
+          [src]="urlPreviewImage"
+          alt="preview image"
+          (error)="previewImageDoestLoaded()"
+          *ngIf="urlPreviewImage"
+        />
+        <span *ngIf="!urlPreviewImage">
+          <mat-icon style="vertical-align: middle">photo</mat-icon>Prévia da
+          imagem
+        </span>
+      </div>
+      <small class="text-secondary"
+        >(Prefira imagens em proporção 16:9 para melhor exibição)</small
+      >
+    </div>
+    <div class="col-md-7 col-sm-12">
+      <div class="row">
+        <div class="col-md-8 col-sm-12">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder=""
+              maxlength="200"
+              [(ngModel)]="product.name"
+            />
+            <label requiredInput>Nome</label>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <div class="form-group">
+            <input
+              currencyMask
+              [options]="{
+                prefix: 'R$ ',
+                thousands: '.',
+                decimal: ',',
+                align: 'left',
+                allowNegative: false
+              }"
+              class="form-control"
+              placeholder=""
+              [(ngModel)]="product.price"
+            />
+            <label requiredInput>Preço</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-10">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder=""
+              maxlength="500"
+              (keydown.enter)="urlPreviewImage = product.urlImage"
+              [(ngModel)]="product.urlImage"
+            />
+            <label>Link da imagem</label>
+          </div>
+        </div>
+        <div class="col-2">
+          <button
+            class="btn btn-info"
+            (click)="urlPreviewImage = product.urlImage"
+            (mouseenter)="btnHover = true"
+            (mouseleave)="btnHover = false"
+          >
+            <app-label-clue [isHover]="btnHover">
+              <ng-container content>
+                <mat-icon>search</mat-icon>
+              </ng-container>
+              <ng-container label
+                >Clique para ver a prévia da imagem</ng-container
+              >
+            </app-label-clue>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <textarea
+              class="form-control"
+              rows="4"
+              maxlength="400"
+              placeholder=""
+              [(ngModel)]="product.description"
+            ></textarea>
+            <label>Descrição</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <h4 class="text-center">Localização</h4>
+    <ng-container *ngIf="!loadingProductData">
+      <app-location
+        [data]="product.getLocationData()"
+        (dataChanged)="product.setLocationData($event)"
+        [isEditing]="true"
+        (loadingData)="loadingLocationData = $event"
+      ></app-location>
+    </ng-container>
+  </div>
+  <div class="row">
+    <div
+      class="col-md-12 d-flex justify-content-between"
+      style="column-gap: 100px"
+    >
+      <button class="btn btn-danger w-50" (click)="goBack()">Voltar</button>
+      <button class="btn btn-success w-50" (click)="saveProductData()">
+        Salvar
+      </button>
+    </div>
+  </div>
+</div>
+<div class="loader-container" *ngIf="verifyIsLoading()">
+  <app-loader-dots></app-loader-dots>
+</div>

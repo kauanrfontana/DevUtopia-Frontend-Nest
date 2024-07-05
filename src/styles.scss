@@ -1,0 +1,345 @@
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+$personal-primary: (
+  50: #e2f1f0,
+  100: #b7ded8,
+  200: #8ac9c0,
+  300: #60b3a7,
+  400: #47a295,
+  500: #3a9283,
+  600: #368576,
+  700: #307567,
+  800: #2c6559,
+  900: #24493e,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+$personal-warn: (
+  50: #fcf8e8,
+  100: #f6eec6,
+  200: #f0e4a2,
+  300: #e9d981,
+  400: #e3d169,
+  500: #deca55,
+  600: #ceb94f,
+  700: #baa449,
+  800: #a58e44,
+  900: #816b3c,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+$personal-accent: (
+  50: #faf4ff,
+  100: #f2ecff,
+  200: #e7e2ff,
+  300: #d6d1f1,
+  400: #b1accc,
+  500: #918cab,
+  600: #686581,
+  700: #55516d,
+  800: #36334d,
+  900: #15142b,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+
+$my-primary: mat.define-palette($personal-primary, 800, 500, 900);
+$my-warn: mat.define-palette($personal-warn, 800, 500, 900);
+$my-accent: mat.define-palette($personal-accent, 800, 900, 500);
+
+$E-Commerce-Frontend-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+    ),
+  )
+);
+@include mat.all-component-themes($E-Commerce-Frontend-theme);
+/* Material update components */
+.mat-mdc-tab-list {
+  border-bottom: 1px solid #666666;
+}
+
+@import "~bootstrap/dist/css/bootstrap.css";
+
+:root {
+  --primary-color: #2c6559;
+  --secondary-color: #a58e44;
+  --ternary-color: #4f3e13;
+  --dark-color: #15142b;
+}
+
+* {
+  font-family: Roboto, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.mdc-tab__text-label {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.card {
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--primary-color);
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--dark-color);
+  border-radius: 5px;
+  &:hover {
+    background: #2c2c3b;
+  }
+}
+
+/* Utility classes */
+h4,
+h3 {
+  font-weight: bold;
+}
+.table-default {
+  width: 100%;
+  tr {
+    vertical-align: baseline;
+  }
+}
+
+.primary-color {
+  color: var(--primary-color);
+}
+.secondary-color {
+  color: var(--secondary-color);
+}
+.ternary-color {
+  color: var(--ternary-color);
+}
+.dark-color {
+  color: var(--dark-color);
+}
+
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  width: 100dvw;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.418);
+  z-index: 3;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  position: relative;
+
+  //sem preenchimento
+  label {
+    position: absolute;
+    top: 12px;
+    left: 5px;
+    font-size: 15px;
+    transition: 0.5s ease-in-out;
+    pointer-events: none;
+  }
+
+  //com preenchimento
+  input:focus + label,
+  textarea:focus + label,
+  textarea:not(:placeholder-shown) + label,
+  input:not(:placeholder-shown) + label {
+    transform: translate(1px, -13px);
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  select:focus + label,
+  textarea:focus + label,
+  select.ng-valid + label {
+    transform: translate(1px, -13px);
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  input.form-control,
+  select.form-control {
+    padding-top: 15px;
+    padding-left: 5px;
+    height: 50px;
+    width: 100%;
+
+    border-radius: 10px;
+    font-size: 15px;
+  }
+  textarea.form-control {
+    padding-top: 15px;
+    padding-left: 5px;
+    width: 100%;
+    resize: none;
+
+    border-radius: 10px;
+    font-size: 15px;
+  }
+}
+
+mat-form-field.mat-mdc-form-field {
+  display: flex;
+}
+
+.no-select {
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container-columns {
+  display: flex;
+  flex-direction: column;
+}
+
+.animate {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  &.animate--infinite {
+    animation-iteration-count: infinite;
+  }
+
+  &.animate--ease-in {
+    animation-timing-function: ease-in;
+  }
+
+  &.animate--delay-1s {
+    animation-delay: 1s;
+  }
+
+  &.animate--delay-500ms {
+    animation-delay: 0.5s;
+  }
+
+  &.animate--fast {
+    animation-duration: 0.6s;
+  }
+
+  &.animate--faster {
+    animation-duration: 0.4s;
+  }
+
+  &.animate--slow {
+    animation-duration: 3s;
+  }
+}
+
+/* Animations */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+@keyframes shake {
+  0% {
+    rotate: 0deg;
+  }
+  25% {
+    rotate: -15deg;
+    filter: blur(2px);
+  }
+  50% {
+    rotate: 15deg;
+  }
+  100% {
+    rotate: 0deg;
+    filter: blur(0px);
+  }
+}
+
+.shake {
+  animation-name: shake;
+}
+
+@keyframes upToDown {
+  25% {
+    transform: translateY(-1rem);
+  }
+  0%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.upToDown {
+  animation-name: upToDown;
+}

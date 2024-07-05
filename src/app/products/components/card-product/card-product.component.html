@@ -1,0 +1,38 @@
+<div
+  class="card"
+  [ngClass]="{ owner: isOwner }"
+  (click)="onClickProduct.emit()"
+>
+  <div class="product-actions">
+    <button
+      class="btn btn-warning"
+      *ngIf="isOwner"
+      [routerLink]="['/products/edit/' + product.id]"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button
+      class="btn btn-danger"
+      *ngIf="isOwner"
+      (click)="onDeleteProduct(); $event.stopPropagation()"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+  <div class="product-image no-select">
+    <img
+      [src]="
+        product.urlImage
+          ? product.urlImage
+          : './../../../../assets/imgs/no-Image.jpg'
+      "
+      [alt]="product.description"
+    />
+  </div>
+  <div class="product-details">
+    <p class="product-name text-secondary">
+      {{ product.name | cutLabel : 18 }}
+    </p>
+    <p class="text-primary">R$ {{ product.price | number : "1.2-2" }}</p>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<app-products-filters
+  (dispatchSearch)="
+    getProductsPaginated($event.getProductsParams, $event.paginationData)
+  "
+  [(paginationData)]="paginationData"
+>
+  <div class="products-list">
+    <div class="products-item" *ngFor="let product of productsList">
+        <app-card-product
+          [product]="product"
+          [isOwner]="isAdmin"
+          (onClickProduct)="viewProduct(product)"
+        ></app-card-product>
+    </div>
+  </div>
+</app-products-filters>
+
+<div class="loader-container" *ngIf="loadingProducts">
+  <app-loader-dots></app-loader-dots>
+</div>

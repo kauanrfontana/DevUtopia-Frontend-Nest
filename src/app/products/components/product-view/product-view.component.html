@@ -1,0 +1,123 @@
+<div class="container p-5">
+  <div class="row">
+    <div class="col-12 text-center">
+      <h3>Detalhes do Produto</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-center mb-5">
+      <div class="preview-image-container">
+        <img
+          [src]="
+            product.urlImage
+              ? product.urlImage
+              : './../../../../assets/imgs/no-Image.jpg'
+          "
+          alt="preview image"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-8">
+          <h5>
+            Nome:
+            <span class="text-primary">{{ product.name || "---" }}</span>
+          </h5>
+        </div>
+        <div class="col-md-4">
+          <h5>
+            Preço:
+            <span class="text-primary"
+              >R$ {{ product.price | number : "1.2-2" || "---" }}</span
+            >
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h5>
+        Descrição:
+        <span class="text-primary">{{ product.description || "---" }}</span>
+      </h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class="text-center">Informações do Vendedor</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h5>
+        Nome:
+        <span class="text-primary">{{ seller.name || "---" }}</span>
+      </h5>
+    </div>
+    <div class="col-md-6">
+      <h5>
+        Email:
+        <span class="text-primary">{{ seller.email || "---" }}</span>
+      </h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class="text-center">Localização</h4>
+      <ng-container *ngIf="!loadingProductData">
+        <app-location
+          [data]="product.getLocationData()"
+          (dataChanged)="product.setLocationData($event)"
+          [isEditing]="false"
+          (loadingData)="loadingLocationData = $event"
+        ></app-location>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <h4 class="text-secondary reviews-opener" (click)="toggleReviews()">
+      {{ !isShowingReviews ? "Mostrar" : "Esconder" }}
+      Avaliações/Avaliar<mat-icon style="vertical-align: middle">{{
+        !isShowingReviews ? "keyboard_arrow_up" : "keyboard_arrow_down"
+      }}</mat-icon>
+    </h4>
+    <app-product-reviews
+      *ngIf="isShowingReviews"
+      [productId]="product.id"
+      (loadingReviews)="loadingReviews = $event"
+    ></app-product-reviews>
+  </div>
+</div>
+
+<div class="actions">
+  <div
+    class="col-md-12 d-flex justify-content-between"
+    style="column-gap: 100px"
+  >
+    <button class="btn btn-danger btn-lg w-50" (click)="goBack()">
+      Voltar
+    </button>
+    <button
+      class="btn btn-success btn-lg w-50"
+      (click)="addProductToShoppingCart()"
+    >
+      <mat-icon style="vertical-align: middle">shopping_cart</mat-icon>Adicionar
+      ao Carrinho
+    </button>
+  </div>
+</div>
+
+<div class="loader-container" *ngIf="verifyIsLoading()">
+  <app-loader-dots></app-loader-dots>
+</div>

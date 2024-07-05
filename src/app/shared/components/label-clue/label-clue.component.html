@@ -1,0 +1,8 @@
+<div [class]="'container-clue ' + position" [ngClass]="{ hovered: isHover }">
+  <ng-content select="[content]"></ng-content>
+  <div class="label-clue no-select">
+    <label>
+      <ng-content select="[label]"></ng-content>
+    </label>
+  </div>
+</div>

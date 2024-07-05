@@ -1,0 +1,8 @@
+input,
+select {
+  margin-block: 1rem;
+}
+
+.row .btn.btn-info {
+  margin-top: 1rem;
+}

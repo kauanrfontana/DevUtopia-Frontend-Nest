@@ -1,0 +1,56 @@
+<div class="shopping-cart-container">
+  <div class="icon-section" #iconSection>
+    <app-label-clue [position]="cluePosition">
+      <ng-container content
+        ><mat-icon (click)="onOpenDropdown()"
+          >shopping_cart</mat-icon
+        ></ng-container
+      >
+      <ng-container label>Carrinho</ng-container>
+    </app-label-clue>
+  </div>
+</div>
+
+<div class="dropdown" [ngClass]="{ visible: dropdownShowing }">
+  <ng-container *ngIf="dropdownShowing">
+    <div class="dropdown-header w-100">
+      <h5>Produtos no Carrinho</h5>
+      <div class="totals">
+        <p>
+          Total Itens:
+          <span class="text-primary">{{
+            shoppingCartData.qtdProducts | number : "1.0-0"
+          }}</span>
+        </p>
+        <p>
+          Valor Total:
+          <span class="text-primary"
+            >R$ {{ shoppingCartData.totalPrice | number : "1.2-2" }}</span
+          >
+        </p>
+      </div>
+    </div>
+    <div class="dropdown-body w-100">
+      <div class="product" *ngFor="let product of shoppingCartData.products">
+        <p
+          class="text-secondary"
+          [routerLink]="['products/view/' + product.id]"
+        >
+          {{ product.name | cutLabel : 18 }}
+        </p>
+        <p class="text-primary">R$ {{ product.price | number : "1.2-2" }}</p>
+        <button
+          class="btn btn-danger h-100"
+          (click)="onRemoveProduct(product.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="dropdown-footer w-100">
+      <button class="btn btn-primary w-100" (click)="onCheckout()">
+        Finalizar compra
+      </button>
+    </div>
+  </ng-container>
+</div>

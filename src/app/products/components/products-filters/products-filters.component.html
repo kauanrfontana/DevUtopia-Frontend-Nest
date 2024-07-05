@@ -1,0 +1,63 @@
+<section class="search-section">
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <input
+          type="search"
+          class="form-control"
+          placeholder=""
+          [(ngModel)]="searchText"
+          (keydown.enter)="
+            dispatchSearchAction(this.productsParams, this.paginationData)
+          "
+        />
+        <label>Nome do(s) Produto(s)</label>
+      </div>
+    </div>
+    <div
+      class="col-md-6 d-inline-flex align-items-center"
+      style="column-gap: 10px"
+    >
+      <div class="button-group">
+        <span
+          [ngClass]="{ active: selectedOrderColumn == 'price' }"
+          (click)="selectOrderColumn('price')"
+          >Preço</span
+        >
+        <mat-icon (click)="changeOrdenation(priceOrder)">{{
+          priceOrder.iconType ? "keyboard_arrow_up" : "keyboard_arrow_down"
+        }}</mat-icon>
+      </div>
+      <div class="button-group">
+        <span
+          [ngClass]="{ active: selectedOrderColumn == 'createdAt' }"
+          (click)="selectOrderColumn('createdAt')"
+          >Criação</span
+        >
+        <mat-icon (click)="changeOrdenation(createdAtOrder)">{{
+          createdAtOrder.iconType ? "keyboard_arrow_up" : "keyboard_arrow_down"
+        }}</mat-icon>
+      </div>
+      <button
+        class="btn btn-info h-100"
+        (click)="dispatchSearchAction(this.productsParams, this.paginationData)"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+      <button
+        class="btn btn-success h-100 w-100"
+        [routerLink]="['/products/create']"
+        *ngIf="canRegisterProduct"
+      >
+        <mat-icon style="vertical-align: bottom">add_circle</mat-icon> Cadastrar
+        Produto
+      </button>
+    </div>
+  </div>
+</section>
+<ng-content></ng-content>
+<app-paginator
+  [totalItems]="paginationData.totalItems"
+  [itemsPerPage]="paginationData.itemsPerPage"
+  (pageChange)="pageChanged($event)"
+></app-paginator>

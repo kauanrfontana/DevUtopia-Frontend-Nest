@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="col-6">
+    <h5 *ngIf="!isEditing">
+      CEP:
+      <span class="text-primary">{{
+        (data.zipCode | mask : "00000-000") || "---"
+      }}</span>
+    </h5>
+    <div class="form-group" *ngIf="isEditing">
+      <input
+        type="text"
+        placeholder=""
+        class="form-control"
+        mask="00000-000"
+        [formControl]="cepControl"
+      />
+      <label requiredInput>CEP</label>
+    </div>
+  </div>
+  <div class="col-6" *ngIf="isEditing">
+    <button
+      class="btn btn-info"
+      [disabled]="loadingCepSearch"
+      (click)="searchLocationByCep(data.zipCode)"
+      (mouseenter)="btnHover = true"
+      (mouseleave)="btnHover = false"
+    >
+      <app-label-clue [isHover]="btnHover">
+        <ng-container content>
+          <mat-icon>search</mat-icon>
+        </ng-container>
+        <ng-container label>Clique para buscar o endereço</ng-container>
+      </app-label-clue>
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <h5 *ngIf="!isEditing">
+      Estado:
+      <span class="text-primary">{{
+        data.stateId ? getStateLabelById(data.stateId) : "---"
+      }}</span>
+    </h5>
+    <div class="form-group" *ngIf="isEditing">
+      <small requiredInput>Estado</small>
+      <app-search-select
+        value="id"
+        [arrToFilter]="states"
+        [(ngValue)]="data.stateId"
+        (ngValueChange)="onStateChange(data.stateId)"
+        [disabled]="loadingCepSearch"
+      ></app-search-select>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-12">
+    <h5 *ngIf="!isEditing">
+      Cidade:
+      <span class="text-primary">{{
+        data.cityId ? getCityLabelById(data.cityId) : "---"
+      }}</span>
+    </h5>
+    <div class="form-group" *ngIf="isEditing">
+      <small requiredInput>Cidade</small>
+      <app-search-select
+        value="id"
+        [arrToFilter]="cities"
+        [(ngValue)]="data.cityId"
+        (ngValueChange)="dataChanged.emit(data)"
+        [disabled]="cities.length < 1 || loadingCepSearch"
+      ></app-search-select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h5 *ngIf="!isEditing">
+      Endereço:
+      <span class="text-primary">{{ data.address || "---" }}</span>
+    </h5>
+    <div class="form-group" *ngIf="isEditing">
+      <input
+        type="text"
+        placeholder=""
+        class="form-control"
+        [(ngModel)]="data.address"
+        (ngModelChange)="dataChanged.emit(data)"
+        [disabled]="loadingCepSearch"
+      />
+      <label requiredInput>Endereço</label>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h5 *ngIf="!isEditing">
+      Complemento:
+      <span class="text-primary">{{ data.complement || "---" }}</span>
+    </h5>
+    <div class="form-group" *ngIf="isEditing">
+      <input
+        type="text"
+        placeholder=""
+        class="form-control"
+        [(ngModel)]="data.complement"
+        (ngModelChange)="dataChanged.emit(data)"
+      />
+      <label>Complemento</label>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <h5 *ngIf="!isEditing">
+      Número:
+      <span class="text-primary">{{ data.houseNumber || "---" }}</span>
+    </h5>
+    <div class="form-group" *ngIf="isEditing">
+      <input
+        type="text"
+        placeholder=""
+        class="form-control"
+        [(ngModel)]="data.houseNumber"
+        (ngModelChange)="dataChanged.emit(data)"
+      />
+      <label requiredInput>Número</label>
+    </div>
+  </div>
+</div>

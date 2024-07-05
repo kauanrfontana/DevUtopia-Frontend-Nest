@@ -1,0 +1,23 @@
+.search-section {
+  margin-bottom: 5rem;
+
+  .button-group {
+    display: flex;
+    span {
+      cursor: pointer;
+      &.active {
+        color: rgb(4 78 237 / 82%);
+        font-weight: bold;
+      }
+    }
+    mat-icon {
+      &:hover {
+        cursor: pointer;
+        color: rgb(4 78 237 / 82%);
+      }
+    }
+  }
+  mat-icon {
+    vertical-align: middle;
+  }
+}

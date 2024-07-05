@@ -1,0 +1,25 @@
+<mat-form-field>
+  <mat-select
+    [(ngModel)]="ngValue"
+    [disabled]="disabled"
+    [multiple]="multiple"
+    (ngModelChange)="ngValueChange.emit(ngValue)"
+    [placeholder]="placeholder"
+    
+  >
+    <mat-option>
+      <ngx-mat-select-search
+        ngModel
+        (ngModelChange)="filterMyOptions($event)"
+        placeholderLabel="Procurar"
+        noEntriesFoundLabel="Nenhum dado encontrado"
+      ></ngx-mat-select-search>
+    </mat-option>
+    <mat-option
+      *ngFor="let option of arrFiltered"
+      [value]="value ? option[value] : option"
+    >
+      {{ value ? option.label : option }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
