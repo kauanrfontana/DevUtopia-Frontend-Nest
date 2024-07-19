@@ -10,8 +10,9 @@ import Swal from "sweetalert2";
 import { UserService } from "src/app/shared/services/user.service";
 import { User } from "src/app/shared/models/User";
 import { ShoppingCartService } from "src/app/shared/services/shopping-cart.service";
-import { IPaginatedResponse } from "src/app/shared/models/IPaginatedResponse.interface";
-import { Review } from "src/app/shared/models/Review";
+import { Store } from "@ngrx/store";
+import * as fromApp from "../../../store/app.reducer";
+import * as ShoppingCartActions from "../../../shared/shopping-cart/store/shopping-cart.actions";
 
 @Component({
   selector: "app-product-view",
@@ -34,7 +35,8 @@ export class ProductViewComponent implements OnInit {
     private userService: UserService,
     private shoppingCartService: ShoppingCartService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<fromApp.AppState>
   ) {}
 
   ngOnInit(): void {
@@ -75,6 +77,9 @@ export class ProductViewComponent implements OnInit {
   }
 
   addProductToShoppingCart() {
+    this.store.dispatch(
+      ShoppingCartActions.addProduct({ payload: this.product })
+    );
     Swal.fire({
       title: "Confirmação",
       text: "Deseja realmente adicionar este produto ao carrinho?",

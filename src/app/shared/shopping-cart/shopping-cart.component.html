@@ -19,19 +19,19 @@
         <p>
           Total Itens:
           <span class="text-primary">{{
-            shoppingCartData.qtdProducts | number : "1.0-0"
+            qtdProducts$ | async | number : "1.0-0"
           }}</span>
         </p>
         <p>
           Valor Total:
           <span class="text-primary"
-            >R$ {{ shoppingCartData.totalPrice | number : "1.2-2" }}</span
+            >R$ {{ totalPrice$ | async | number : "1.2-2" }}</span
           >
         </p>
       </div>
     </div>
     <div class="dropdown-body w-100">
-      <div class="product" *ngFor="let product of shoppingCartData.products">
+      <div class="product" *ngFor="let product of products$ | async">
         <p
           class="text-secondary"
           [routerLink]="['products/view/' + product.id]"

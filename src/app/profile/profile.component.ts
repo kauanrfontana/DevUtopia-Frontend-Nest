@@ -8,6 +8,7 @@ import {
 import Swal from "sweetalert2";
 import { PaginationData } from "../shared/models/PaginationData";
 import { IPaginatedResponse } from "../shared/models/IPaginatedResponse.interface";
+import { firstValueFrom } from "rxjs";
 
 @Component({
   selector: "app-profile",
@@ -123,7 +124,7 @@ export class ProfileComponent implements OnInit {
           </div>
           <div class="form-group" style="margin: 1rem;">
           <input
-            type="text"
+            type="password"
             class="form-control"
             placeholder=""
             id="newPassword"
@@ -135,32 +136,30 @@ export class ProfileComponent implements OnInit {
       showCancelButton: true,
       cancelButtonText: "Cancelar",
       showLoaderOnConfirm: true,
+      preConfirm: async () => {
+        if (this.isNotStrongPasswordValidator(this.newPassword)) {
+          Swal.showValidationMessage(
+            "A senha deve ter no mínimo 6 caracteres, conter letras maiúsculas, minúsculas, números e caracteres especiais!"
+          );
+          return false;
+        }
+        return await firstValueFrom(
+          this.userService.updatePassword({
+            currentPassword: this.currentPassword,
+            newPassword: this.newPassword,
+          })
+        )
+          .then((res: IBasicResponseMessage) => {
+            Swal.fire("Sucesso", res.message, "success");
+          })
+          .catch((err: Error) => {
+            Swal.showValidationMessage(err.message);
+          });
+      },
     }).then((result) => {
       if (result.dismiss) {
         return;
       }
-      if (this.isNotStrongPasswordValidator(this.newPassword)) {
-        Swal.fire(
-          "Erro ao atualizar senha!",
-          "A senha deve ter no mínimo 6 caracteres, conter letras maiúsculas, minúsculas, números e caracteres especiais!",
-          "error"
-        );
-        return;
-      }
-
-      this.userService
-        .updatePassword({
-          currentPassword: this.currentPassword,
-          newPassword: this.newPassword,
-        })
-        .subscribe({
-          next: (res: IBasicResponseMessage) => {
-            Swal.fire("Sucesso", res.message, "success");
-          },
-          error: (err: Error) => {
-            Swal.fire("Erro ao atualizar senha!", err.message, "error");
-          },
-        });
     });
 
     const $currentPasswordInput = document.getElementById(

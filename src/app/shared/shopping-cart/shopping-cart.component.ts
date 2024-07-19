@@ -12,6 +12,10 @@ import { IBasicResponseData } from "../models/IBasicResponse.interfaces";
 import Swal from "sweetalert2";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { Store } from "@ngrx/store";
+import * as fromApp from "../../store/app.reducer";
+import * as ShoppingCartActions from "./store/shopping-cart.actions";
+import * as ShoppingCartSelectors from "./store/shopping-cart.selectors";
 
 @Component({
   selector: "app-shopping-cart",
@@ -23,14 +27,18 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   cluePosition: "left" | "right" = "right";
   dropdownShowing: boolean = false;
 
-  shoppingCartData = new ShoppingCart();
+  shoppingCart$ = this.store.select("shoppingCart");
+  qtdProducts$ = this.store.select(ShoppingCartSelectors.selectQtdProducts);
+  totalPrice$ = this.store.select(ShoppingCartSelectors.selectTotalPrice);
+  products$ = this.store.select(ShoppingCartSelectors.selectProducts);
 
   subscriptionShoppingCartData = new Subscription();
 
   constructor(
     private shoppingCartService: ShoppingCartService,
     private elementRef: ElementRef,
-    private router: Router
+    private router: Router,
+    private store: Store<fromApp.AppState>
   ) {
     if (window.innerWidth < 980) {
       this.cluePosition = "left";
@@ -87,15 +95,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   getShoppingCartData() {
-    this.shoppingCartService.getShoppingCartData().subscribe({
-      next: (res: IBasicResponseData<ShoppingCart>) => {
-        this.shoppingCartData = res.data;
-        this.shoppingCartService.shoppingCartData.next(this.shoppingCartData);
-      },
-      error: (err: Error) => {
-        Swal.fire("Erro ao consultar carrinho!", err.message, "error");
-      },
-    });
+    this.store.dispatch(ShoppingCartActions.fetchShoppingCart());
   }
 
   onRemoveProduct(productId: number) {

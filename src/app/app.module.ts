@@ -8,6 +8,10 @@ import { CommonModule, registerLocaleData } from "@angular/common";
 import { AuthModule } from "./auth/auth.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import localePt from "@angular/common/locales/pt";
+import { StoreModule } from "@ngrx/store";
+import * as fromApp from "./store/app.reducer";
+import { EffectsModule } from "@ngrx/effects";
+import { ShoppingCartEffects } from "./shared/shopping-cart/store/shopping-cart.effects";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -19,6 +23,8 @@ registerLocaleData(localePt);
     CommonModule,
     AuthModule,
     BrowserAnimationsModule,
+    StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([ShoppingCartEffects]),
   ],
   providers: [{ provide: LOCALE_ID, useValue: "pt" }],
   bootstrap: [AppComponent],

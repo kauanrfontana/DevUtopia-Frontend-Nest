@@ -81,12 +81,15 @@ export class ProductsService {
   }
 
   updateProduct(product: Product): Observable<IBasicResponseMessage> {
-    return this.http.put<IBasicResponseMessage>("products", product);
+    return this.http.put<IBasicResponseMessage>(
+      `products/${product.id}`,
+      product
+    );
   }
 
   updateReview(id: number, review: Review): Observable<IBasicResponseMessage> {
     return this.http.put<IBasicResponseMessage>(
-      `products/${id}/reviews`,
+      `products/${id}/reviews/${review.id}`,
       review
     );
   }

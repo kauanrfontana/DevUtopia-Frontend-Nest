@@ -15,18 +15,22 @@ export class ShoppingCartService {
   constructor(private http: HttpClient) {}
 
   getShoppingCartData(): Observable<IBasicResponseData<ShoppingCart>> {
-    return this.http.get<IBasicResponseData<ShoppingCart>>("shopping-cart");
+    return this.http.get<IBasicResponseData<ShoppingCart>>("shopping-carts");
   }
 
   addProductToShoppingCart(
     productId: number
   ): Observable<IBasicResponseMessage> {
-    return this.http.post<IBasicResponseMessage>("shoppingCart", { productId });
+    return this.http.post<IBasicResponseMessage>("shopping-carts/add-product", {
+      productId,
+    });
   }
 
   removeProductFromShoppingCart(
     productId: number
   ): Observable<IBasicResponseMessage> {
-    return this.http.delete<IBasicResponseMessage>("shoppingCart/" + productId);
+    return this.http.delete<IBasicResponseMessage>(
+      "shopping-carts/" + productId
+    );
   }
 }

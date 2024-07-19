@@ -37,7 +37,7 @@ export class UserService {
   }
 
   updateUserData(user: User): Observable<IBasicResponseMessage> {
-    return this.http.put<IBasicResponseMessage>("users", user);
+    return this.http.put<IBasicResponseMessage>(`users/${user.id}`, user);
   }
 
   updatePassword(changePasswordData: {
