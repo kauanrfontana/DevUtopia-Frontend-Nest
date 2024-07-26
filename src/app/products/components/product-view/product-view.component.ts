@@ -77,10 +77,20 @@ export class ProductViewComponent implements OnInit {
   }
 
   addProductToShoppingCart() {
-    this.store.dispatch(
-      ShoppingCartActions.addProduct({ payload: this.product })
-    );
     Swal.fire({
+      title: "Confirmação",
+      text: "Deseja realmente adicionar este produto ao carrinho?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Confirmar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isDismissed) return;
+      this.store.dispatch(
+        ShoppingCartActions.addProduct({ payload: this.product })
+      );
+    });
+    /*   Swal.fire({
       title: "Confirmação",
       text: "Deseja realmente adicionar este produto ao carrinho?",
       icon: "question",
@@ -107,7 +117,7 @@ export class ProductViewComponent implements OnInit {
       },
     }).then((result) => {
       if (result.isDismissed) return;
-    });
+    }); */
   }
 
   verifyIsLoading(): boolean {

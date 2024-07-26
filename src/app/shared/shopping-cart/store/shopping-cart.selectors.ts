@@ -18,3 +18,13 @@ export const selectProducts = createSelector(
   selectShoppingCartState,
   (shoppingCart) => shoppingCart.products
 );
+
+export const selectProductSuccess = createSelector(
+  selectShoppingCartState,
+  (shoppingCart) => shoppingCart.message
+);
+
+export const selectProductFailure = createSelector(
+  selectShoppingCartState,
+  (shoppingCart) => shoppingCart.error
+);

@@ -6,9 +6,6 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { ShoppingCartService } from "../services/shopping-cart.service";
-import { ShoppingCart } from "../models/ShoppingCart";
-import { IBasicResponseData } from "../models/IBasicResponse.interfaces";
 import Swal from "sweetalert2";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -27,15 +24,20 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   cluePosition: "left" | "right" = "right";
   dropdownShowing: boolean = false;
 
-  shoppingCart$ = this.store.select("shoppingCart");
   qtdProducts$ = this.store.select(ShoppingCartSelectors.selectQtdProducts);
   totalPrice$ = this.store.select(ShoppingCartSelectors.selectTotalPrice);
   products$ = this.store.select(ShoppingCartSelectors.selectProducts);
 
-  subscriptionShoppingCartData = new Subscription();
+  shoppingCartFailures$ = this.store.select(
+    ShoppingCartSelectors.selectProductFailure
+  );
+  shoppingCartSuccesses$ = this.store.select(
+    ShoppingCartSelectors.selectProductSuccess
+  );
+
+  subscription = new Subscription();
 
   constructor(
-    private shoppingCartService: ShoppingCartService,
     private elementRef: ElementRef,
     private router: Router,
     private store: Store<fromApp.AppState>
@@ -67,10 +69,20 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getShoppingCartData();
-    this.subscriptionShoppingCartData =
-      this.shoppingCartService.shoppingCartDataChanged.subscribe(() => {
-        this.getShoppingCartData();
-      });
+    this.shoppingCartFailures$.subscribe({
+      next: (error: string | null) => {
+        if (error) {
+          Swal.fire("Erro ao consultar carrinho!", error, "error");
+        }
+      },
+    });
+    this.shoppingCartSuccesses$.subscribe({
+      next: (message: string | null) => {
+        if (message) {
+          Swal.fire("Sucesso!", message, "success");
+        }
+      },
+    });
   }
 
   doAnimation() {
@@ -95,11 +107,14 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   getShoppingCartData() {
-    this.store.dispatch(ShoppingCartActions.fetchShoppingCart());
+    this.store.dispatch(ShoppingCartActions.loadShoppingCart());
   }
 
   onRemoveProduct(productId: number) {
-    this.shoppingCartService
+    this.store.dispatch(
+      ShoppingCartActions.deleteProduct({ payload: productId })
+    );
+    /*  this.shoppingCartService
       .removeProductFromShoppingCart(productId)
       .subscribe({
         next: (res) => {
@@ -111,7 +126,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         error: (err: Error) => {
           Swal.fire("Erro ao remover produto!", err.message, "error");
         },
-      });
+      }); */
   }
 
   onCheckout() {
@@ -120,6 +135,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptionShoppingCartData.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }
