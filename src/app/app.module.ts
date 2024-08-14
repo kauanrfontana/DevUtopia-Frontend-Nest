@@ -12,6 +12,7 @@ import { StoreModule } from "@ngrx/store";
 import * as fromApp from "./store/app.reducer";
 import { EffectsModule } from "@ngrx/effects";
 import { ShoppingCartEffects } from "./shared/shopping-cart/store/shopping-cart.effects";
+import { ProductsReducerEffects } from "./products/store/products.effects";
 
 registerLocaleData(localePt);
 @NgModule({
@@ -24,7 +25,7 @@ registerLocaleData(localePt);
     AuthModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([ShoppingCartEffects]),
+    EffectsModule.forRoot([ShoppingCartEffects, ProductsReducerEffects]),
   ],
   providers: [{ provide: LOCALE_ID, useValue: "pt" }],
   bootstrap: [AppComponent],

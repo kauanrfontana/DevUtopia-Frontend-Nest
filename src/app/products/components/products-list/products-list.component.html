@@ -5,16 +5,16 @@
   [(paginationData)]="paginationData"
 >
   <div class="products-list">
-    <div class="products-item" *ngFor="let product of productsList">
-        <app-card-product
-          [product]="product"
-          [isOwner]="isAdmin"
-          (onClickProduct)="viewProduct(product)"
-        ></app-card-product>
+    <div class="products-item" *ngFor="let product of productsList$ | async">
+      <app-card-product
+        [product]="product"
+        [isOwner]="isAdmin"
+        (onClickProduct)="viewProduct(product)"
+      ></app-card-product>
     </div>
   </div>
 </app-products-filters>
 
-<div class="loader-container" *ngIf="loadingProducts">
+<div class="loader-container" *ngIf="loadingProducts$ | async">
   <app-loader-dots></app-loader-dots>
 </div>

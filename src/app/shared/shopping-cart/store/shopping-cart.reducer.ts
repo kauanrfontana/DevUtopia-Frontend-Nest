@@ -3,7 +3,6 @@ import { Product } from "../../models/Product";
 import * as ShoppingCartActions from "./shopping-cart.actions";
 
 export interface State {
-  userId: number;
   products: Product[];
   qtdProducts: number;
   totalPrice: number;
@@ -12,7 +11,6 @@ export interface State {
 }
 
 export const initialState: State = {
-  userId: 0,
   products: [],
   qtdProducts: 0,
   totalPrice: 0,

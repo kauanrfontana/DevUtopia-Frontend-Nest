@@ -23,7 +23,11 @@ export class ShoppingCartEffects {
             });
           }),
           catchError((err) =>
-            of(ShoppingCartActions.loadShoppingCartFailure(err))
+            of(
+              ShoppingCartActions.loadShoppingCartFailure({
+                payload: err.message,
+              })
+            )
           )
         )
       )
